@@ -136,7 +136,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/19/hash%E5%87%BD%E6%95%B0/">hash函数</a>
+      <a class="article-title" href="/2021/01/19/hash%E5%87%BD%E6%95%B0/">Chormium 相关</a>
     </h1>
   
 
@@ -144,7 +144,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Chromium 代码中使用了一个 SuperFastHash 函数当做base库默认的hash函数，相关文档 <a target="_blank" rel="noopener" href="http://www.azillionmonkeys.com/qed/hash.html">http://www.azillionmonkeys.com/qed/hash.html</a> , 按文档的benchmark测试结果，该函数的性能远高于常用计算checksum的crc32，fnv等hash函数。</p>
+        <ul>
+<li>笔记</li>
+<li>Chromium 代码中使用了一个 SuperFastHash 函数当做base库默认的hash函数，相关文档 <a target="_blank" rel="noopener" href="http://www.azillionmonkeys.com/qed/hash.html">http://www.azillionmonkeys.com/qed/hash.html</a> , 按文档的benchmark测试结果，该函数的性能远高于常用计算checksum的crc32，fnv等hash函数。</li>
+<li>android的MessageQueue中，在处理消息时会先通过nativePollOnce等待native fd的事件，有可能被java消息或者ALooper的其他fd消息唤醒，唤醒后先处理native的消息，然后回到java处理java消息，因此native消息优先级会更高。</li>
+<li> 代码在 <a target="_blank" rel="noopener" href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/MessageQueue.java;l=335;drc=master;bpv=1;bpt=1">https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/MessageQueue.java;l=335;drc=master;bpv=1;bpt=1</a> <a target="_blank" rel="noopener" href="https://cs.android.com/android/platform/superproject/+/master:system/core/libutils/Looper.cpp;drc=master;bpv=1;bpt=1;l=175">https://cs.android.com/android/platform/superproject/+/master:system/core/libutils/Looper.cpp;drc=master;bpv=1;bpt=1;l=175</a></li>
+</ul>
 
       
     </div>
@@ -532,7 +537,7 @@
           </li>
         
           <li>
-            <a href="/2021/01/19/hash%E5%87%BD%E6%95%B0/">hash函数</a>
+            <a href="/2021/01/19/hash%E5%87%BD%E6%95%B0/">Chormium 相关</a>
           </li>
         
           <li>
