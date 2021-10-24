@@ -270,3 +270,19 @@ int main(int argc, char* argv[]) {
 ```
 
 这文件编译出来有亿点大，135MB，十分感人。
+```
+testdir % ls -lah variadic
+-rwxr-xr-x  1 swp  staff   135M Oct 24 23:12 variadic
+testdir % ./variadic
+45632
+ total: 5 ten thousands digit : 4 thousands digit : 5 hundreds digit : 6 tens digit : 3 ones digit : 2  in order: 4 5 6 3 2  reverse: 2 3 6 5 4 
+0
+ total: 1 ones digit: 0 in order: 0 reverse: 0 
+1
+ total: 1 ones digit : 1  in order: 1  reverse: 1 
+99999
+ total: 5 ten thousands digit : 9 thousands digit : 9 hundreds digit : 9 tens digit : 9 ones digit : 9  in order: 9 9 9 9 9  reverse: 9 9 9 9 9
+123
+ total: 3 hundreds digit : 1 tens digit : 2 ones digit : 3  in order: 1 2 3  reverse: 3 2 1
+```
+
