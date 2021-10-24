@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C++模板元编程幼儿园中班期中考试篇 | DTech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="背景https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;E3-MUoN3LmtL9cp1n14Ydw 本文素材来自于上面这个链接，一个怪人用88万行switch case完成了下面这个题目。   给出一个不多于5位的正整数，要求：1 求出它是几位数；2 分别输出每一位数；3 按逆序输出各位数宇，例如原数为 5631，应输出为 1365。   在原文调侃下，实际上实现了这个题目（不考虑代码体积）的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++模板元编程幼儿园中班期中考试篇">
+<meta property="og:url" content="https://bathingsun.xyz/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/index.html">
+<meta property="og:site_name" content="DTech">
+<meta property="og:description" content="背景https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;E3-MUoN3LmtL9cp1n14Ydw 本文素材来自于上面这个链接，一个怪人用88万行switch case完成了下面这个题目。   给出一个不多于5位的正整数，要求：1 求出它是几位数；2 分别输出每一位数；3 按逆序输出各位数宇，例如原数为 5631，应输出为 1365。   在原文调侃下，实际上实现了这个题目（不考虑代码体积）的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-24T15:10:38.000Z">
+<meta property="article:modified_time" content="2021-10-24T15:14:36.887Z">
+<meta property="article:author" content="MonkD404">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="DTech" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DTech</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://bathingsun.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C-模板元编程幼儿园中班期中考试篇" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/" class="article-date">
+  <time datetime="2021-10-24T15:10:38.000Z" itemprop="datePublished">2021-10-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++模板元编程幼儿园中班期中考试篇
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E3-MUoN3LmtL9cp1n14Ydw">https://mp.weixin.qq.com/s/E3-MUoN3LmtL9cp1n14Ydw</a></p>
+<p>本文素材来自于上面这个链接，一个怪人用88万行switch case完成了下面这个题目。 </p>
+<ul>
+<li>给出一个不多于5位的正整数，要求：<br>1 求出它是几位数；<br>2 分别输出每一位数；<br>3 按逆序输出各位数宇，例如原数为 5631，应输出为 1365。</li>
+</ul>
+<p> 在原文调侃下，实际上实现了这个题目（不考虑代码体积）的性能理论最佳的实现，不需要任何计算，直接switch case出结果。</p>
+<p>看了大佬的实现之后，我发现其实这个代码完全可以用c++ 的metaprogramming魔法来写，就是一个预计算的代码生成。所以以我现在c++元编程的幼儿园中班水平，花了亿点点时间写了这个实现。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>最终代码。<a target="_blank" rel="noopener" href="https://github.com/mOnkD404/testcode/blob/master/variadic.cc">https://github.com/mOnkD404/testcode/blob/master/variadic.cc</a></p>
+<p> 核心逻辑总共不到100行，下面开始实现。</p>
+<ol>
+<li>首先需要做到类似switch case  的代码逻辑，不能有连续的if else，要能通过偏移直接找到代码地址，也就是function dispatch table的实现方式。  然后如果想要和switch case一样没有运行时额外开销，就不能用static const变量实现，因为static是第一次运行时跑初始化逻辑。在这里使用constexpr 构造函数的特性实现 (constexpr constructor)。这部分都是标准 c++ 写法，基本没啥新鲜的。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">size_t</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTable</span>&lt;</span>N&gt; &#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">void</span> (*)(), N&gt; table_&#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">constexpr</span> <span class="title">PrintTable</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">PrintAt</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span> </span>&#123; table_[index](); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintInt</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">int</span> size = <span class="number">1000</span>;</span><br><span class="line">  <span class="keyword">if</span> (c &gt;= size)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">using</span> Table = PrintTable&lt;size&gt;;</span><br><span class="line">  <span class="keyword">constexpr</span> Table tb;</span><br><span class="line">  tb.PrintAt(c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li> 接下来需要填充table的初始化逻辑，我们希望能用模版的变参展开特性，让编译器在编译阶段帮我们生成这个从1 到 N 的 table，那么模板的参数就不能是size_t,  这里需要用到 c++  的  index sequence 这个特性。调整之后代码长这样 。 其中前两行是模板的空实现，目的是为了使用 index sequence提供偏特化。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTable</span>;</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">size_t</span>... N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTable</span>&lt;</span><span class="built_in">std</span>::index_sequence&lt;N...&gt;&gt; &#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">void</span> (*)(), <span class="keyword">sizeof</span>...(N)&gt; table_&#123;PrintTraits&lt;N&gt;::Print...&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">constexpr</span> <span class="title">PrintTable</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">PrintAt</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span> </span>&#123; table_[index](); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintInt</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">int</span> size = <span class="number">1000</span>;</span><br><span class="line">  <span class="keyword">if</span> (c &gt;= size)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">using</span> Table = PrintTable&lt;<span class="built_in">std</span>::make_index_sequence&lt;size&gt;&gt;;</span><br><span class="line">  <span class="keyword">constexpr</span> Table tb;</span><br><span class="line">  tb.PrintAt(c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>接下来实现 PrintTraits 。PrintTraits 要实现题目的要求，输出几位数，每位数是什么，然后倒序输出。 对每个要求的输出实现一个traits模板。</p>
+<ol>
+<li><p>首先我们实现一个帮助模板，用于记录一个已经拆分完的数字。 显然，他自然就有了输出序列，和计算序列长度的方法。这里用了模板变参展开的日常生活小技巧。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitsVector</span> &#123;</span></span><br><span class="line">  <span class="keyword">using</span> Type = DigitsVector&lt;Is...&gt;;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> &#123;</span> DigitsCount = <span class="keyword">sizeof</span>...(Is) &#125;;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintDigitsString</span><span class="params">()</span> </span>&#123; ((<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; (<span class="keyword">int</span>)Is &lt;&lt; <span class="string">&quot; &quot;</span>), ...); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintDigitsCount</span><span class="params">()</span> </span>&#123; <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; DigitsCount &lt;&lt; <span class="string">&quot; &quot;</span>; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>b. 那么最关键的一步就是要把模板的输入数字拆分。这部分我一开始的实现是比较挫的，在群里跟一些c++魔法爱好者学习之后，才写出了比价符合c++魔法部价值观的实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">typename</span> = DigitsVector&lt;&gt;&gt;</span><br><span class="line">struct DigitTraitsHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">char</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitTraitsHelper</span>&lt;</span>IntVal, DigitsVector&lt;Is...&gt;&gt;</span><br><span class="line">    : DigitTraitsHelper&lt;IntVal / <span class="number">10</span>, DigitsVector&lt;IntVal % <span class="number">10</span>, Is...&gt;&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitTraitsHelper</span>&lt;</span><span class="number">0</span>, DigitsVector&lt;Is...&gt;&gt; : DigitsVector&lt;Is...&gt; &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>最重要的需要养成的习惯是，c++ 元编程是面向编译器的。最最常用的技巧是利用编译器对类型的推导和解析能力，来实现常规代码中的函数调用和递归或循环，来实现计算功能，比如这里，通过每次继承就在DigitsVector中塞入一个参数的方式，将一个位数的信息传入DigitsVector模板参数中，最后在第一个参数为0时，停止继续继承自己，类似递归逻辑的结束点。</p>
+<p>c.  现在序列已经生成，接下来需要实现类似“个位数：1，十位数：8”这种输出的逻辑。这部分经过一些思考之后，我们发现可以构造一个静态的prefix table，然后还是用index sequence的方式，配合变参模板输出即可。这里面用了 static_assert 和 std::extent  来断言防止位数超过支持的宽度。并且继续使用了变参展开的生活小技巧。<del>小技巧小技巧，一天不学受不了</del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintDigitsNameHelper</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Is, <span class="keyword">size_t</span>... N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintDigitsNameHelper</span>&lt;</span>DigitsVector&lt;Is...&gt;, <span class="built_in">std</span>::index_sequence&lt;N...&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">char</span>* NameTable[] = &#123;</span><br><span class="line">      <span class="string">&quot;ones digit&quot;</span>, <span class="string">&quot;tens digit&quot;</span>, <span class="string">&quot;hundreds digit&quot;</span>, <span class="string">&quot;thousands digit&quot;</span>,</span><br><span class="line">      <span class="string">&quot;ten thousands digit&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">size_t</span> C = <span class="keyword">sizeof</span>...(N);</span><br><span class="line">  <span class="keyword">static_assert</span>(C &lt;= <span class="built_in">std</span>::extent&lt;<span class="keyword">decltype</span>(NameTable)&gt;::value, <span class="string">&quot;overflow&quot;</span>);</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ((<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; NameTable[C - N - <span class="number">1</span>] &lt;&lt; <span class="string">&quot; : &quot;</span> &lt;&lt; (<span class="keyword">int</span>)Is &lt;&lt; <span class="string">&quot; &quot;</span>), ...);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>d. 最后是一个反序的模板实现，有了上文的铺垫之后，到这里已经十分的straight forward。就是利用类型推倒和继承机制，把一个DigitsVector的模板参数反序。实际就是在利用编译器的type推倒机制实现递归，最后递归结束点是原DigitsVector 的参数为空。注意这里很容易想到将变参模板的参数用普通函数的方式递归之后反序输出，不够魔幻，会被魔法部警告。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">char</span>... Is, <span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>&lt;</span>DigitsVector&lt;IntVal, Is...&gt;, Rs...&gt;</span><br><span class="line">    : DigitVectorReverseHelper&lt;DigitsVector&lt;Is...&gt;, IntVal, Rs...&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>&lt;</span>DigitsVector&lt;&gt;, Rs...&gt; : DigitsVector&lt;Rs...&gt; &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>e. 最后来实现打印逻辑，就是把上面几个输出放一起。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTraits</span> &#123;</span></span><br><span class="line">  <span class="keyword">using</span> Helper = <span class="keyword">typename</span> DigitTraitsHelper&lt;N&gt;::Type;</span><br><span class="line">  <span class="keyword">using</span> ReverseHelper = <span class="keyword">typename</span> DigitVectorReverseHelper&lt;</span><br><span class="line">      <span class="keyword">typename</span> DigitTraitsHelper&lt;N&gt;::Type&gt;::Type;</span><br><span class="line">  <span class="keyword">using</span> PrintDigitsName =</span><br><span class="line">      PrintDigitsNameHelper&lt;Helper,</span><br><span class="line">                            <span class="built_in">std</span>::make_index_sequence&lt;Helper::DigitsCount&gt;&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; total: &quot;</span>;</span><br><span class="line">    Helper::PrintDigitsCount();</span><br><span class="line">    PrintDigitsName::Print();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; in order: &quot;</span>;</span><br><span class="line">    Helper::PrintDigitsString();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; reverse: &quot;</span>;</span><br><span class="line">    ReverseHelper::PrintDigitsString();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+</li>
+</ol>
+<p>最后的最后补全一些判断逻辑，是见证魔法的时刻。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;array&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;type_traits&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitsVector</span> &#123;</span></span><br><span class="line">  <span class="keyword">using</span> Type = DigitsVector&lt;Is...&gt;;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> &#123;</span> DigitsCount = <span class="keyword">sizeof</span>...(Is) &#125;;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintDigitsString</span><span class="params">()</span> </span>&#123; ((<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; (<span class="keyword">int</span>)Is &lt;&lt; <span class="string">&quot; &quot;</span>), ...); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintDigitsCount</span><span class="params">()</span> </span>&#123; <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; DigitsCount &lt;&lt; <span class="string">&quot; &quot;</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintDigitsNameHelper</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Is, <span class="keyword">size_t</span>... N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintDigitsNameHelper</span>&lt;</span>DigitsVector&lt;Is...&gt;, <span class="built_in">std</span>::index_sequence&lt;N...&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">char</span>* NameTable[] = &#123;</span><br><span class="line">      <span class="string">&quot;ones digit&quot;</span>, <span class="string">&quot;tens digit&quot;</span>, <span class="string">&quot;hundreds digit&quot;</span>, <span class="string">&quot;thousands digit&quot;</span>,</span><br><span class="line">      <span class="string">&quot;ten thousands digit&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">size_t</span> C = <span class="keyword">sizeof</span>...(N);</span><br><span class="line">  <span class="keyword">static_assert</span>(C &lt;= <span class="built_in">std</span>::extent&lt;<span class="keyword">decltype</span>(NameTable)&gt;::value, <span class="string">&quot;overflow&quot;</span>);</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ((<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; NameTable[C - N - <span class="number">1</span>] &lt;&lt; <span class="string">&quot; : &quot;</span> &lt;&lt; (<span class="keyword">int</span>)Is &lt;&lt; <span class="string">&quot; &quot;</span>), ...);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">typename</span> = DigitsVector&lt;&gt;&gt;</span><br><span class="line">struct DigitTraitsHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">char</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitTraitsHelper</span>&lt;</span>IntVal, DigitsVector&lt;Is...&gt;&gt;</span><br><span class="line">    : DigitTraitsHelper&lt;IntVal / <span class="number">10</span>, DigitsVector&lt;IntVal % <span class="number">10</span>, Is...&gt;&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span>... Is&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitTraitsHelper</span>&lt;</span><span class="number">0</span>, DigitsVector&lt;Is...&gt;&gt; : DigitsVector&lt;Is...&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> IntVal, <span class="keyword">char</span>... Is, <span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>&lt;</span>DigitsVector&lt;IntVal, Is...&gt;, Rs...&gt;</span><br><span class="line">    : DigitVectorReverseHelper&lt;DigitsVector&lt;Is...&gt;, IntVal, Rs...&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">char</span>... Rs&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DigitVectorReverseHelper</span>&lt;</span>DigitsVector&lt;&gt;, Rs...&gt; : DigitsVector&lt;Rs...&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTraits</span> &#123;</span></span><br><span class="line">  <span class="keyword">using</span> Helper = <span class="keyword">typename</span> DigitTraitsHelper&lt;N&gt;::Type;</span><br><span class="line">  <span class="keyword">using</span> ReverseHelper = <span class="keyword">typename</span> DigitVectorReverseHelper&lt;</span><br><span class="line">      <span class="keyword">typename</span> DigitTraitsHelper&lt;N&gt;::Type&gt;::Type;</span><br><span class="line">  <span class="keyword">using</span> PrintDigitsName =</span><br><span class="line">      PrintDigitsNameHelper&lt;Helper,</span><br><span class="line">                            <span class="built_in">std</span>::make_index_sequence&lt;Helper::DigitsCount&gt;&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; total: &quot;</span>;</span><br><span class="line">    Helper::PrintDigitsCount();</span><br><span class="line">    PrintDigitsName::Print();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; in order: &quot;</span>;</span><br><span class="line">    Helper::PrintDigitsString();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; reverse: &quot;</span>;</span><br><span class="line">    ReverseHelper::PrintDigitsString();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTraits</span>&lt;</span><span class="number">0</span>&gt; &#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; total: 1 ones digit: 0 in order: 0 reverse: 0 &quot;</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTable</span>;</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">size_t</span>... N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PrintTable</span>&lt;</span><span class="built_in">std</span>::index_sequence&lt;N...&gt;&gt; &#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">void</span> (*)(), <span class="keyword">sizeof</span>...(N)&gt; table_&#123;PrintTraits&lt;N&gt;::Print...&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">constexpr</span> <span class="title">PrintTable</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">PrintAt</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span> </span>&#123; table_[index](); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintInt</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constexpr</span> <span class="keyword">int</span> size = <span class="number">100000</span>;</span><br><span class="line">  <span class="keyword">if</span> (c &gt;= size)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">using</span> Table = PrintTable&lt;<span class="built_in">std</span>::make_index_sequence&lt;size&gt;&gt;;</span><br><span class="line">  <span class="keyword">constexpr</span> Table tb;</span><br><span class="line">  tb.PrintAt(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">string</span> line; <span class="built_in">std</span>::getline(<span class="built_in">std</span>::<span class="built_in">cin</span>, line);) &#123;</span><br><span class="line">    PrintInt(atoi(line.c_str()));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这文件编译出来有亿点大，135MB，十分感人。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bathingsun.xyz/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/" data-id="ckv5dcbd70000l9ndhyg27arp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/19/hash%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hash函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/">C++模板元编程幼儿园中班期中考试篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/19/hash%E5%87%BD%E6%95%B0/">hash函数</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/10/%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%99%E4%B8%80%E5%8F%B0%E5%AE%8C%E7%BE%8E%E6%B5%8B%E8%AF%95%E6%9C%BA/">如何调教一台完美的测试机:AOSP刷入GMS记录</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/16/%E8%A7%84%E5%88%99%E5%8C%B9%E9%85%8D%E5%BC%95%E6%93%8E/">规则匹配引擎</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/22/Android-WebView-DrawFn-%E7%9B%B8%E5%85%B3/">Android WebView DrawFn 相关</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 MonkD404<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
