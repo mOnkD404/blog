@@ -87,7 +87,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>记录一下折腾的踩坑记录，日后防坑用。</p>
-<h1 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h1><p>用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是一层虚拟机上运行openwrt的某个定制版本,虚拟机还可以装nas系统，实现家庭影院系统，离线下载等功能。</p>
+<h1 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h1><p>用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是一层虚拟机上运行openwrt的某个定制版本,虚拟机还可以装nas系统，实现家庭影院系统，离线下载等功能。<br>注意：如果要支持4k UHD解码对硬件有要求，可以参考plex对各大厂Nas的测试结果<a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1MfYoJkiwSqCXg8cm5-Ac4oOLPRtCkgUxU0jdj3tmMPc/edit#gid=1274624273">https://docs.google.com/spreadsheets/d/1MfYoJkiwSqCXg8cm5-Ac4oOLPRtCkgUxU0jdj3tmMPc/edit#gid=1274624273</a></p>
 <p>ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hyperV、 KVM这类东西。<br>openWRT是个开源的路由器系统。<br>trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。<br>NAS是私人云存储设备。</p>
 <h1 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h1><p>大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。<br>于是重新用U盘做了exsi的启动盘，流程是</p>
 <ol>
