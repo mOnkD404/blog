@@ -1,0 +1,52 @@
+---
+title: 软路由折腾记.md
+date: 2022-02-07 17:51:56
+tags:
+---
+记录一下折腾的踩坑记录，日后防坑用。
+
+# 软路由
+用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是openwrt的各种版本。
+
+ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hpyerV KVM这类东西。
+openWRT是个开源的路由器系统。
+trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。
+NAS是私人云存储设备。
+
+# 实操
+大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。
+于是重新用U盘做了exsi的启动盘，流程是
+1. esxi的个人许可证是免费的，需要自己注册账号下载。https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6
+2. iso烧写到U盘，常规操作。
+在安装系统的时候发现，ssd格式化会失败，不想深究原因，反正是坏了，狗东上下单了一个新的。然后就和装其他系统一样，u盘启动，安装esxi系统。
+
+然后要在ESXI里安装openwrt和trueNAS。
+- trueNas的系统可以直接下载官方给的iso镜像
+- openwrt由于有各种定制版，比如要用某科学功能的话，需要自己拉源码编译，这里需要一个ubuntu的机器，随便找台电脑用virtualBox装个ubuntu即可。
+
+openwrt装好之后为了性能优化需要开启bios的虚拟化，esxi里开启网卡硬件passthrough。
+
+trueNas里面有很多优秀的插件（Plex Server，Kodi，NextCloud，HomeAssistant），基于FreeBSD的Jails功能实现, 文件系统是牛叉的ZFS。
+
+坑1：
+ESXI里面的vSwitch虚拟交换机设置：
+- Security policy
+ - Allow promiscuous mode
+- NIC teaming policy
+ - Route based on IP hash
+
+不然多个虚拟机没法和局域网的其他设备互通网络。
+
+坑2:
+- openwrt编译会直接出一个vmdk文件，这个是vmware用的格式，esxi还不能用。
+ - 办法是用一个叫StarWind Converter的软件（还只有win版本）转一下。
+ - 就是这步导致没有windows无法搞定
+
+坑3:
+不该把所有的系统都放在同一台机器上，出问题之后修复成本太高，已经下单了QNAP乞丐版。^_^
+
+
+
+
+
+
