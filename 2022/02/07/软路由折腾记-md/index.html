@@ -5,17 +5,17 @@
   
 
   
-  <title>hash函数 | DTech</title>
+  <title>软路由折腾记.md | DTech</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Chromium 代码中使用了一个 SuperFastHash 函数当做base库默认的hash函数，相关文档 http:&#x2F;&#x2F;www.azillionmonkeys.com&#x2F;qed&#x2F;hash.html , 按文档的benchmark测试结果，该函数的性能远高于常用计算checksum的crc32，fnv等hash函数。">
+  <meta name="description" content="记录一下折腾的踩坑记录，日后防坑用。 软路由用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是openwrt的各种版本。 ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hpyerV KVM这类东西。openWRT是个开源的路由器系统。trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。NAS是私人云存储设备。 实操大概">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hash函数">
-<meta property="og:url" content="https://bathingsun.xyz/2021/01/19/hash%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="软路由折腾记.md">
+<meta property="og:url" content="https://bathingsun.xyz/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/index.html">
 <meta property="og:site_name" content="DTech">
-<meta property="og:description" content="Chromium 代码中使用了一个 SuperFastHash 函数当做base库默认的hash函数，相关文档 http:&#x2F;&#x2F;www.azillionmonkeys.com&#x2F;qed&#x2F;hash.html , 按文档的benchmark测试结果，该函数的性能远高于常用计算checksum的crc32，fnv等hash函数。">
+<meta property="og:description" content="记录一下折腾的踩坑记录，日后防坑用。 软路由用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是openwrt的各种版本。 ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hpyerV KVM这类东西。openWRT是个开源的路由器系统。trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。NAS是私人云存储设备。 实操大概">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-01-19T07:21:19.000Z">
-<meta property="article:modified_time" content="2021-10-24T15:01:46.730Z">
+<meta property="article:published_time" content="2022-02-07T09:51:56.000Z">
+<meta property="article:modified_time" content="2022-02-07T10:22:09.897Z">
 <meta property="article:author" content="MonkD404">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hash函数" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-软路由折腾记-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2021/01/19/hash%E5%87%BD%E6%95%B0/" class="article-date">
-  <time datetime="2021-01-19T07:21:19.000Z" itemprop="datePublished">2021-01-19</time>
+    <a href="/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/" class="article-date">
+  <time datetime="2022-02-07T09:51:56.000Z" itemprop="datePublished">2022-02-07</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hash函数
+      软路由折腾记.md
     </h1>
   
 
@@ -88,12 +88,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Chromium 代码中使用了一个 SuperFastHash 函数当做base库默认的hash函数，相关文档 <a target="_blank" rel="noopener" href="http://www.azillionmonkeys.com/qed/hash.html">http://www.azillionmonkeys.com/qed/hash.html</a> , 按文档的benchmark测试结果，该函数的性能远高于常用计算checksum的crc32，fnv等hash函数。</p>
+        <p>记录一下折腾的踩坑记录，日后防坑用。</p>
+<h1 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h1><p>用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是openwrt的各种版本。</p>
+<p>ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hpyerV KVM这类东西。<br>openWRT是个开源的路由器系统。<br>trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。<br>NAS是私人云存储设备。</p>
+<h1 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h1><p>大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。<br>于是重新用U盘做了exsi的启动盘，流程是</p>
+<ol>
+<li>esxi的个人许可证是免费的，需要自己注册账号下载。<a target="_blank" rel="noopener" href="https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6">https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6</a></li>
+<li>iso烧写到U盘，常规操作。<br>在安装系统的时候发现，ssd格式化会失败，不想深究原因，反正是坏了，狗东上下单了一个新的。然后就和装其他系统一样，u盘启动，安装esxi系统。</li>
+</ol>
+<p>然后要在ESXI里安装openwrt和trueNAS。</p>
+<ul>
+<li>trueNas的系统可以直接下载官方给的iso镜像</li>
+<li>openwrt由于有各种定制版，比如要用某科学功能的话，需要自己拉源码编译，这里需要一个ubuntu的机器，随便找台电脑用virtualBox装个ubuntu即可。</li>
+</ul>
+<p>openwrt装好之后为了性能优化需要开启bios的虚拟化，esxi里开启网卡硬件passthrough。</p>
+<p>trueNas里面有很多优秀的插件（Plex Server，Kodi，NextCloud，HomeAssistant），基于FreeBSD的Jails功能实现, 文件系统是牛叉的ZFS。</p>
+<p>坑1：<br>ESXI里面的vSwitch虚拟交换机设置：</p>
+<ul>
+<li>Security policy</li>
+<li>Allow promiscuous mode</li>
+<li>NIC teaming policy</li>
+<li>Route based on IP hash</li>
+</ul>
+<p>不然多个虚拟机没法和局域网的其他设备互通网络。</p>
+<p>坑2:</p>
+<ul>
+<li>openwrt编译会直接出一个vmdk文件，这个是vmware用的格式，esxi还不能用。</li>
+<li>办法是用一个叫StarWind Converter的软件（还只有win版本）转一下。</li>
+<li>就是这步导致没有windows无法搞定</li>
+</ul>
+<p>坑3:<br>不该把所有的系统都放在同一台机器上，出问题之后修复成本太高，已经下单了QNAP乞丐版。^_^</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://bathingsun.xyz/2021/01/19/hash%E5%87%BD%E6%95%B0/" data-id="ckv5dacmi0001kwnd7gu32w39" class="article-share-link">Share</a>
+      <a data-url="https://bathingsun.xyz/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/" data-id="ckzcjp31o00008rnd3aawhe3i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -102,19 +131,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          C++模板元编程幼儿园中班期中考试篇
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/11/10/%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%99%E4%B8%80%E5%8F%B0%E5%AE%8C%E7%BE%8E%E6%B5%8B%E8%AF%95%E6%9C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">如何调教一台完美的测试机:AOSP刷入GMS记录</div>
+      <div class="article-nav-title">C++模板元编程幼儿园中班期中考试篇</div>
     </a>
   
 </nav>

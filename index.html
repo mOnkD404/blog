@@ -64,6 +64,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-软路由折腾记-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/" class="article-date">
+  <time datetime="2022-02-07T09:51:56.000Z" itemprop="datePublished">2022-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/">软路由折腾记.md</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一下折腾的踩坑记录，日后防坑用。</p>
+<h1 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h1><p>用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是openwrt的各种版本。</p>
+<p>ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hpyerV KVM这类东西。<br>openWRT是个开源的路由器系统。<br>trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。<br>NAS是私人云存储设备。</p>
+<h1 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h1><p>大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。<br>于是重新用U盘做了exsi的启动盘，流程是</p>
+<ol>
+<li>esxi的个人许可证是免费的，需要自己注册账号下载。<a target="_blank" rel="noopener" href="https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6">https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6</a></li>
+<li>iso烧写到U盘，常规操作。<br>在安装系统的时候发现，ssd格式化会失败，不想深究原因，反正是坏了，狗东上下单了一个新的。然后就和装其他系统一样，u盘启动，安装esxi系统。</li>
+</ol>
+<p>然后要在ESXI里安装openwrt和trueNAS。</p>
+<ul>
+<li>trueNas的系统可以直接下载官方给的iso镜像</li>
+<li>openwrt由于有各种定制版，比如要用某科学功能的话，需要自己拉源码编译，这里需要一个ubuntu的机器，随便找台电脑用virtualBox装个ubuntu即可。</li>
+</ul>
+<p>openwrt装好之后为了性能优化需要开启bios的虚拟化，esxi里开启网卡硬件passthrough。</p>
+<p>trueNas里面有很多优秀的插件（Plex Server，Kodi，NextCloud，HomeAssistant），基于FreeBSD的Jails功能实现, 文件系统是牛叉的ZFS。</p>
+<p>坑1：<br>ESXI里面的vSwitch虚拟交换机设置：</p>
+<ul>
+<li>Security policy</li>
+<li>Allow promiscuous mode</li>
+<li>NIC teaming policy</li>
+<li>Route based on IP hash</li>
+</ul>
+<p>不然多个虚拟机没法和局域网的其他设备互通网络。</p>
+<p>坑2:</p>
+<ul>
+<li>openwrt编译会直接出一个vmdk文件，这个是vmware用的格式，esxi还不能用。</li>
+<li>办法是用一个叫StarWind Converter的软件（还只有win版本）转一下。</li>
+<li>就是这步导致没有windows无法搞定</li>
+</ul>
+<p>坑3:<br>不该把所有的系统都放在同一台机器上，出问题之后修复成本太高，已经下单了QNAP乞丐版。^_^</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bathingsun.xyz/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/" data-id="ckzcjp31o00008rnd3aawhe3i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-C-模板元编程幼儿园中班期中考试篇" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/" class="article-date">
@@ -542,7 +608,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
     </div>
   </div>
 
@@ -553,6 +619,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/02/07/%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%8A%98%E8%85%BE%E8%AE%B0-md/">软路由折腾记.md</a>
+          </li>
         
           <li>
             <a href="/2021/10/24/C-%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B%E5%B9%BC%E5%84%BF%E5%9B%AD%E4%B8%AD%E7%8F%AD%E6%9C%9F%E4%B8%AD%E8%80%83%E8%AF%95%E7%AF%87/">C++模板元编程幼儿园中班期中考试篇</a>
@@ -570,10 +640,6 @@
             <a href="/2020/10/16/%E8%A7%84%E5%88%99%E5%8C%B9%E9%85%8D%E5%BC%95%E6%93%8E/">规则匹配引擎</a>
           </li>
         
-          <li>
-            <a href="/2020/09/22/Android-WebView-DrawFn-%E7%9B%B8%E5%85%B3/">Android WebView DrawFn 相关</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -586,7 +652,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2021 MonkD404<br>
+      &copy; 2022 MonkD404<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
