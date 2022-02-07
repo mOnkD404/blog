@@ -15,7 +15,7 @@
 <meta property="og:description" content="记录一下折腾的踩坑记录，日后防坑用。 软路由用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是一层虚拟机上运行openwrt的某个定制版本,虚拟机还可以装nas系统，实现家庭影院系统，离线下载等功能。注意：如果要支持4k UHD解码对硬件有要求，可以参考plex对各大厂Nas的测试结果https:&#x2F;&#x2F;docs.google.com&#x2F;spreadsheets&#x2F;d&#x2F;1MfYoJk">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-07T09:51:56.000Z">
-<meta property="article:modified_time" content="2022-02-07T11:10:39.823Z">
+<meta property="article:modified_time" content="2022-02-07T11:18:58.326Z">
 <meta property="article:author" content="MonkD404">
 <meta name="twitter:card" content="summary">
   
@@ -91,18 +91,19 @@
         <p>记录一下折腾的踩坑记录，日后防坑用。</p>
 <h1 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h1><p>用旧电脑或者工控机运行路由器系统的设备，硬件现在有很多定制的，系统一般是一层虚拟机上运行openwrt的某个定制版本,虚拟机还可以装nas系统，实现家庭影院系统，离线下载等功能。<br>注意：如果要支持4k UHD解码对硬件有要求，可以参考plex对各大厂Nas的测试结果<a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1MfYoJkiwSqCXg8cm5-Ac4oOLPRtCkgUxU0jdj3tmMPc/edit#gid=1274624273">https://docs.google.com/spreadsheets/d/1MfYoJkiwSqCXg8cm5-Ac4oOLPRtCkgUxU0jdj3tmMPc/edit#gid=1274624273</a></p>
 <p>ESXI是一个虚拟机操作系统，和虚拟机软件比起来它本身就是个虚拟机容器，类似hyperV、 KVM这类东西。<br>openWRT是个开源的路由器系统。<br>trueNas是个开源的Nas操作系统，基于freeBSD，文件系统用的ZFS。<br>NAS是私人云存储设备。</p>
-<h1 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h1><p>大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。<br>于是重新用U盘做了exsi的启动盘，流程是</p>
+<h1 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h1><p>大概前年买了一个工控机，系统用的ESXI虚拟了openwrt和trueNas，本来顺风顺水，谁知道过年期间突然无响应了，重启进系统发现SSD好像坏掉了，任何写操作都会失败。<br>想到可能是SSD坏了，就用U盘做了exsi的启动盘，准备刷一下系统用。<br>流程是</p>
 <ol>
-<li>esxi的个人许可证是免费的，需要自己注册账号下载。<a target="_blank" rel="noopener" href="https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6">https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6</a></li>
-<li>iso烧写到U盘，常规操作。<br>在安装系统的时候发现，ssd格式化会失败，不想深究原因，反正是坏了，狗东上下单了一个新的。然后就和装其他系统一样，u盘启动，安装esxi系统。</li>
+<li>下载ESXI系统镜像。esxi的个人许可证是免费的，需要自己注册账号下载。<a target="_blank" rel="noopener" href="https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6">https://customerconnect.vmware.com/cn/group/vmware/evalcenter?p=free-esxi6</a></li>
+<li>iso烧写到U盘，常规操作。</li>
 </ol>
-<p>然后要在ESXI里安装openwrt和trueNAS。</p>
+<p>在安装系统的时候发现，SSD确实坏了，U盘启动之后格式化SSD都会失败，不想深究原因，反正是坏了，狗东上下单了一个新的。然后就和装其他系统一样，u盘启动，安装esxi系统。</p>
+<p>最后在ESXI里安装openwrt和trueNAS。</p>
 <ul>
 <li>trueNas的系统可以直接下载官方给的iso镜像</li>
 <li>openwrt由于有各种定制版，比如要用某科学功能的话，需要自己拉源码编译，这里需要一个ubuntu的机器，随便找台电脑用virtualBox装个ubuntu即可。</li>
 </ul>
 <p>openwrt装好之后为了性能优化需要开启bios的虚拟化，esxi里开启网卡硬件passthrough。</p>
-<p>trueNas里面有很多优秀的插件（Plex Server，Kodi，NextCloud，HomeAssistant），基于FreeBSD的Jails功能实现, 文件系统是牛叉的ZFS。</p>
+<p>trueNas里面有很多优秀的插件（Plex Server，Kodi，NextCloud，HomeAssistant, Aria2），基于FreeBSD的Jails功能实现, 文件系统是牛叉的ZFS。</p>
 <p>坑1：<br>ESXI里面的vSwitch虚拟交换机设置：</p>
 <ul>
 <li>Security policy</li>
